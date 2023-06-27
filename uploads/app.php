@@ -321,8 +321,199 @@ $router->delete("/cities", function(){
 
 /** TABLA CITIES */
 
-/** TABLA design_area */
+/** TABLA contact_info */
+$router->get("/contact", function(){
+    $conn = new Connect();
+    $res = $conn->conn->prepare("SELECT * FROM contact_info");
+    $res->execute();    
+    $res = $res->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($res);
+    // print_r(file_get_contents("php://input"));
+});
 
-/** TABLA design_area */
+$router->post("/contact",function() {
+    $_DATA=json_decode(file_get_contents("php://input"),true);
+    $conn= new Connect();
+    $res= $conn-> conn->prepare("INSERT INTO contact_info (id_staff,whatsapp,instagram,linkedin,email,address,cel_number) VALUES (:staff,:wpp,:instagram,:linkedin,:email,:address,:cel_number)");
+    $res->bindValue('staff', $_DATA['id_staff']);
+    $res->bindValue('wpp', $_DATA['whatsapp']);
+    $res->bindValue('instagram', $_DATA['instagram']);
+    $res->bindValue('linkedin', $_DATA['linkedin']);
+    $res->bindValue('email', $_DATA['email']);
+    $res->bindValue('address', $_DATA['address']);
+    $res->bindValue('cel_number', $_DATA['cel_number']);
+    $res->execute();
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+$router->put("/contact",function() {
+    $_DATA=json_decode(file_get_contents("php://input"),true);
+    $conn= new Connect();
+    $res= $conn-> conn->prepare("UPDATE contact_info SET id_staff=:staff,whatsapp=:wpp,instagram=:instagram,linkedin=:linkedin,email=:email,address=:address,cel_number=:cel_number WHERE id=:id");
+    $res->bindValue('id', $_DATA['id']);
+    $res->bindValue('staff', $_DATA['id_staff']);
+    $res->bindValue('wpp', $_DATA['whatsapp']);
+    $res->bindValue('instagram', $_DATA['instagram']);
+    $res->bindValue('linkedin', $_DATA['linkedin']);
+    $res->bindValue('email', $_DATA['email']);
+    $res->bindValue('address', $_DATA['address']);
+    $res->bindValue('cel_number', $_DATA['cel_number']);
+    $res->execute();
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+$router->delete("/contact", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new Connect();
+    $res = $conn->conn->prepare("DELETE FROM contact_info WHERE id = :id;");
+    $res->bindValue('id', $_DATA['id']);
+    $res->execute();    
+    $res = $res->rowCount();
+    echo json_encode($res);
+    // print_r(file_get_contents("php://input"));
+});
+/** TABLA contact_info */
+
+/** TABLA COUNTRIES */
+$router->get("/countries", function(){
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("SELECT * FROM countries");
+    $res->execute();    
+    $res = $res->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($res);
+});
+
+$router->post("/countries", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("INSERT INTO countries(name_country) VALUES(:name_country);");
+    $res->bindValue('name_country', $_DATA['name_country']);
+    $res->execute();
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+$router->put("/countries", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("UPDATE countries SET name_country = :name_country WHERE id = :id;");
+    $res->bindValue('id', $_DATA['id']);
+    $res->bindValue('name_country', $_DATA['name_country']);
+    $res->execute();
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+$router->delete("/countries", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("DELETE FROM countries WHERE id = :id;");
+    $res->bindValue('id', $_DATA['id']);
+    $res->execute();    
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+/** TABLA COUNTRIES */
+
+/** TABLA DESIGN_AREA*/
+$router->get("/design_area", function(){
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("SELECT * FROM design_area");
+    $res->execute();    
+    $res = $res->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($res);
+});
+
+$router->post("/design_area", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("INSERT INTO design_area(id_area, id_staff, id_position, id_journey) VALUES(:idArea, :idStaff, :idPosition, :idJourney);");
+    $res->bindValue('idArea', $_DATA['id_area']);
+    $res->bindValue('idStaff', $_DATA['id_staff']);
+    $res->bindValue('idPosition', $_DATA['id_position']);
+    $res->bindValue('idJourney', $_DATA['id_journey']);
+    $res->execute();    
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+$router->put("/design_area", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("UPDATE design_area SET id_area = :idArea, id_staff = :idStaff, id_position = :idPosition, id_journey = :idJourney WHERE id = :id;");
+    $res->bindValue('id', $_DATA['id']);
+    $res->bindValue('idArea', $_DATA['id_area']);
+    $res->bindValue('idStaff', $_DATA['id_staff']);
+    $res->bindValue('idPosition', $_DATA['id_position']);
+    $res->bindValue('idJourney', $_DATA['id_journey']);
+    $res->execute();
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+$router->delete("/design_area", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("DELETE FROM design_area WHERE id = :id;");
+    $res->bindValue('id', $_DATA['id']);
+    $res->execute();    
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+/** TABLA DESIGN_AREA*/
+
+
+/** TABLA EMERGENCY_CONTACT*/
+
+$router->get("/emergency_contact", function(){
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("SELECT * FROM emergency_contact");
+    $res->execute();    
+    $res = $res->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($res);
+});
+
+$router->post("/emergency_contact", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("INSERT INTO emergency_contact(id_staff, cel_number, relationship, full_name, email) VALUES(:id_staff, :cel_number, :relationship, :full_name, :email);");
+    $res->bindValue('id_staff', $_DATA['id_staff']);
+    $res->bindValue('cel_number', $_DATA['cel_number']);
+    $res->bindValue('relationship', $_DATA['relationship']);
+    $res->bindValue('full_name', $_DATA['full_name']);
+    $res->bindValue('email', $_DATA['email']);
+    $res->execute();
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+$router->put("/emergency_contact", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("UPDATE emergency_contact SET id_staff = :id_staff, cel_number = :cel_number, relationship = :relationship, full_name = :full_name, email = :email WHERE id = :id;");
+    $res->bindValue('id', $_DATA['id']);
+    $res->bindValue('id_staff', $_DATA['id_staff']);
+    $res->bindValue('cel_number', $_DATA['cel_number']);
+    $res->bindValue('relationship', $_DATA['relationship']);
+    $res->bindValue('full_name', $_DATA['full_name']);
+    $res->bindValue('email', $_DATA['email']);
+    $res->execute();
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+$router->delete("/emergency_contact", function(){
+    $_DATA = json_decode(file_get_contents("php://input"), true);
+    $conn = new \App\Connect();
+    $res = $conn->conn->prepare("DELETE FROM emergency_contact WHERE id = :id;");
+    $res->bindValue('id', $_DATA['id']);
+    $res->execute();    
+    $res = $res->rowCount();
+    echo json_encode($res);
+});
+
+/** TABLA EMERGENCY_CONTACT*/
 
 $router->run();
